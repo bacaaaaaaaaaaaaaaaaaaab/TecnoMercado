@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Mis productos - TecnoMercado</title>
+    ```
+
 </head>
+
 <body>
+
+```
+<h1>Mis productos</h1>
+
+<p>
+    Bienvenido, {{ request.user.username }}
+</p>
+
+<a href="{% url 'productos:agregar_producto' %}">
+    Agregar producto
+</a>
+
+<hr>
+
+{% if productos %}
+
+{% for producto in productos %}
+
+<div>
+
+    <h2>{{ producto.nombre }}</h2>
+
+    <p>
+        <strong>SKU:</strong>
+        {{ producto.sku }}
+    </p>
+
+    <p>
+        <strong>Categoría:</strong>
+        {{ producto.categoria.nombre }}
+    </p>
+
+    <p>
+        <strong>Marca:</strong>
+        {{ producto.marca }}
+    </p>
+
+    <p>
+        <strong>Modelo:</strong>
+        {{ producto.modelo }}
+    </p>
+
+    <p>
+        <strong>Precio:</strong>
+        ${{ producto.precio }}
+    </p>
+
+    <p>
+        <strong>Descripción:</strong>
+        {{ producto.descripcion }}
+    </p>
+
+    <p>
+        <strong>Estado:</strong>
+
+        {% if producto.activo %}
+        Activo
+        {% else %}
+        Inactivo
+        {% endif %}
+    </p>
+
+    <a href="{% url 'productos:editar_producto' producto.id %}">
+        Editar
+    </a>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+{% else %}
+
+<p>
+    Todavía no tienes productos publicados.
+</p>
+
+<a href="{% url 'productos:agregar_producto' %}">
+    Publicar mi primer producto
+</a>
+
+{% endif %}
+
+<hr>
+
+<form method="post" action="{% url 'usuarios:logout' %}">
+    {% csrf_token %}
+
+    <button type="submit">
+        Cerrar sesión
+    </button>
+</form>
+```
 
 </body>
 </html>
