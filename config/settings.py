@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'productos',
+    'pedidos',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +135,7 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+LOGIN_URL = "/usuarios/login/"
+LOGIN_REDIRECT_URL = "/productos/mis-productos/"
+LOGOUT_REDIRECT_URL = "/usuarios/login/"
