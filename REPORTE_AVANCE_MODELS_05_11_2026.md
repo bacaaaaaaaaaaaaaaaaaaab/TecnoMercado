@@ -7,6 +7,11 @@
 
 ## 1. Objetivo de la actividad
 
+En el contexto de Laravel y su ORM Eloquent, un modelo es una clase PHP que actúa como una representación orientada a objetos de una tabla de base de datos.
+Cada modelo se asocia directamente con una tabla específica, donde cada instancia del modelo representa una fila de esa tabla.
+Los modelos extienden la clase base Model y permiten realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) de manera intuitiva sin escribir código SQL manualmente.
+Siguen convenciones de nombres, como usar el singular para el modelo y el plural para la tabla, facilitando la asociación automática entre el código y la base de datos.
+
 Continuar con la preparación del lado servidor de TecnoMercado después de completar la creación de las tablas principales de la base de datos. El objetivo de esta etapa fue preparar los modelos Eloquent y revisar la configuración de autenticación de Laravel antes de comenzar con los controladores, CRUD, validaciones, políticas de autorización e integración con las vistas.
 
 ## 2. Modelos Eloquent
