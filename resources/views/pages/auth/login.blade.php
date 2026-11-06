@@ -10,39 +10,39 @@
         <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
             @csrf
 
-            <!-- Email Address -->
+            <!-- Correo electrónico -->
             <flux:input
-                name="email"
-                :label="__('Email address')"
-                :value="old('email')"
+                name="correo"
+                :label="__('Correo electrónico')"
+                :value="old('correo')"
                 type="email"
                 required
                 autofocus
                 autocomplete="email"
-                placeholder="email@example.com"
+                placeholder="maria.23070008@itsmotul.edu.mx"
             />
 
-            <!-- Password -->
+            <!-- Contraseña -->
             <div class="relative">
                 <flux:input
                     name="password"
-                    :label="__('Password')"
+                    :label="__('Contraseña')"
                     type="password"
                     required
                     autocomplete="current-password"
-                    :placeholder="__('Password')"
+                    :placeholder="__('Contraseña')"
                     viewable
                 />
 
                 @if (Route::has('password.request'))
                     <flux:link class="absolute top-0 text-sm end-0" :href="route('password.request')" wire:navigate>
-                        {{ __('Forgot your password?') }}
+                        {{ __('¿Olvidaste tu contraseña?') }}
                     </flux:link>
                 @endif
             </div>
 
             <!-- Remember Me -->
-            <flux:checkbox name="remember" :label="__('Remember me')" :checked="old('remember')" />
+            <!--flux:checkbox name="remember" :label="__('Remember me')" :checked="old('remember')" /-->
 
             <div class="flex items-center justify-end">
                 <flux:button variant="primary" type="submit" class="w-full" data-test="login-button">
