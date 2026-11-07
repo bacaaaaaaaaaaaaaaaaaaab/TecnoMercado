@@ -1,55 +1,74 @@
+
 <x-layouts::auth :title="__('Register')">
     <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
+        <x-auth-header
+            :title="__('Create an account')"
+            :description="__('Enter your details below to create your account')"
+        />
 
         <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+        <x-auth-session-status
+            class="text-center"
+            :status="session('status')"
+        />
 
         <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-6">
             @csrf
-            <!-- Name -->
+
+            <!-- Nombre -->
             <flux:input
-                name="name"
-                :label="__('Name')"
-                :value="old('name')"
+                name="nombre"
+                :label="__('Nombre')"
+                :value="old('nombre')"
                 type="text"
                 required
                 autofocus
-                autocomplete="name"
-                :placeholder="__('Full name')"
+                autocomplete="given-name"
+                placeholder="Nombre"
             />
 
-            <!-- Email Address -->
+            <!-- Apellidos -->
             <flux:input
-                name="email"
-                :label="__('Email address')"
-                :value="old('email')"
+                name="apellidos"
+                :label="__('Apellidos')"
+                :value="old('apellidos')"
+                type="text"
+                required
+                autocomplete="family-name"
+                placeholder="Apellidos"
+            />
+
+            <!-- Correo electrónico -->
+            <flux:input
+                name="correo"
+                :label="__('Correo electrónico')"
+                :value="old('correo')"
                 type="email"
                 required
                 autocomplete="email"
-                placeholder="email@example.com"
+                placeholder="maria.23070008@itsmotul.edu.mx"
             />
 
-            <!-- Password -->
+            <!-- Contraseña -->
             <flux:input
-                name="password"
-                :label="__('Password')"
+                name="contrasena"
+                :label="__('Contraseña')"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Password')"
+                :placeholder="__('Contraseña')"
                 passwordrules="{{ \Illuminate\Validation\Rules\Password::defaults()->toPasswordRulesString() }}"
                 viewable
             />
 
-            <!-- Confirm Password -->
+            <!-- Confirmar contraseña -->
             <flux:input
-                name="password_confirmation"
-                :label="__('Confirm password')"
+                name="contrasena_confirmation"
+                :label="__('Confirmar contraseña')"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Confirm password')"
+                :placeholder="__('Confirmar contraseña')"
                 passwordrules="{{ \Illuminate\Validation\Rules\Password::defaults()->toPasswordRulesString() }}"
                 viewable
             />

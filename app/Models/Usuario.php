@@ -39,4 +39,15 @@ class Usuario extends Authenticatable
     {
         return 'contrasena';
     }
+
+    /*** Nombre del atributo utilizado para recuperar contraseñas.*/
+    public function getEmailForPasswordReset(): string
+    {
+        return $this->correo;
+    }
+    /*** Dirección de correo utilizada para enviar notificaciones.*/
+    public function routeNotificationForMail($notification = null): string
+    {
+        return $this->correo;
+    }
 }
