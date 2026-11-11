@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Usuario extends Authenticatable
 {
@@ -102,4 +106,95 @@ class Usuario extends Authenticatable
     {
         return $this->correo;
     }
+
+    /**
+     * Roles que tiene asignados el usuario.
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Rol::class,
+            'usuario_roles',
+            'id_usuario',
+            'id_rol',
+            'id_usuario',
+            'id_rol'
+        )->using(UsuarioRol::class);
+    }
+
+    /**
+     * Perfil de vendedor asociado al usuario.
+     */
+    public function vendedor(): HasOne
+    {
+        return $this->hasOne(
+            Vendedor::class,
+            'id_usuario',
+            'id_usuario'
+        );
+    }
+
+    /**
+     * Productos guardados en favoritos por el usuario.
+     */
+    public function productosFavoritos(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Producto::class,
+            'favoritos',
+            'id_usuario',
+            'id_producto',
+            'id_usuario',
+            'id_producto'
+        )->using(Favorito::class)->withPivot('created_at');
+    }
+
+    /**
+     * Carritos pertenecientes al usuario.
+     */
+    public function carritos(): HasMany
+    {
+        return $this->hasMany(
+            Carrito::class,
+            'id_usuario',
+            'id_usuario'
+        );
+    }
+
+    /**
+     * Pedidos realizados por el usuario como comprador.
+     */
+    public function pedidos(): HasMany
+    {
+        return $this->hasMany(
+            Pedido::class,
+            'id_comprador',
+            'id_usuario'
+        );
+    }
+
+    /**
+     * Registros de historial en los que el usuario fue responsable.
+     */
+    public function historialesEstadosResponsable(): HasMany
+    {
+        return $this->hasMany(
+            HistorialEstadoPedido::class,
+            'id_usuario_responsable',
+            'id_usuario'
+        );
+    }
+
+    /**
+     * Notificaciones recibidas por el usuario.
+     */
+    public function notificaciones(): HasMany
+    {
+        return $this->hasMany(
+            Notificacion::class,
+            'id_usuario',
+            'id_usuario'
+        );
+    }
+
 }
