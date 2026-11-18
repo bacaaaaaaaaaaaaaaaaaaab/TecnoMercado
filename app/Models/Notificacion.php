@@ -16,6 +16,7 @@ class Notificacion extends Model
     protected $fillable = [
         'id_usuario',
         'id_pedido_vendedor',
+        'id_detalle_pedido',
         'tipo',
         'mensaje',
         'leida',
@@ -45,9 +46,6 @@ class Notificacion extends Model
 
     /**
      * Solicitud de vendedor relacionada con la notificación.
-     *
-     * Puede ser null si la notificación no está asociada
-     * a una solicitud o si esta fue eliminada.
      */
     public function pedidoVendedor(): BelongsTo
     {
@@ -55,6 +53,18 @@ class Notificacion extends Model
             PedidoVendedor::class,
             'id_pedido_vendedor',
             'id_pedido_vendedor'
+        );
+    }
+
+    /**
+     * Producto específico al que hace referencia la notificación.
+     */
+    public function detallePedido(): BelongsTo
+    {
+        return $this->belongsTo(
+            DetallePedido::class,
+            'id_detalle_pedido',
+            'id_detalle_pedido'
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Inventario extends Model
@@ -25,6 +26,16 @@ class Inventario extends Model
             'stock_fisico' => 'integer',
             'stock_reservado' => 'integer',
         ];
+    }
+
+    /**
+     * Calcula las unidades disponibles para venta.
+     */
+    protected function stockDisponible(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): int => $this->stock_fisico - $this->stock_reservado
+        );
     }
 
     /**

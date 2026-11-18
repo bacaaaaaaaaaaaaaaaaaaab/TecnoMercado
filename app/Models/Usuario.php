@@ -146,8 +146,12 @@ class Usuario extends Authenticatable
             'id_producto',
             'id_usuario',
             'id_producto'
-        )->using(Favorito::class)->withPivot('created_at');
+        )
+            ->using(Favorito::class)
+            ->withPivot('created_at');
+
     }
+
 
     /**
      * Carritos pertenecientes al usuario.

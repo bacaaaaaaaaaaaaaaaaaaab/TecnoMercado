@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DetallePedido extends Model
 {
@@ -17,6 +18,12 @@ class DetallePedido extends Model
         'nombre_producto',
         'cantidad',
         'precio_unitario_referencia',
+        'estado_respuesta',
+        'disponibilidad_producto',
+        'motivo_respuesta',
+        'dar_de_baja_publicacion',
+        'justificacion_publicacion',
+        'fecha_respuesta',
     ];
 
     protected function casts(): array
@@ -24,6 +31,9 @@ class DetallePedido extends Model
         return [
             'cantidad' => 'integer',
             'precio_unitario_referencia' => 'decimal:2',
+            'disponibilidad_producto' => 'boolean',
+            'dar_de_baja_publicacion' => 'boolean',
+            'fecha_respuesta' => 'datetime',
         ];
     }
 
@@ -48,6 +58,30 @@ class DetallePedido extends Model
             Producto::class,
             'id_producto',
             'id_producto'
+        );
+    }
+
+    /**
+     * Historial de respuestas registradas para este producto solicitado.
+     */
+    public function historialRespuestas(): HasMany
+    {
+        return $this->hasMany(
+            HistorialRespuestaProducto::class,
+            'id_detalle_pedido',
+            'id_detalle_pedido'
+        );
+    }
+
+    /**
+     * Notificaciones relacionadas con este detalle del pedido.
+     */
+    public function notificaciones(): HasMany
+    {
+        return $this->hasMany(
+            Notificacion::class,
+            'id_detalle_pedido',
+            'id_detalle_pedido'
         );
     }
 }

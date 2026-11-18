@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+
 
 class Producto extends Model
 {
@@ -87,7 +89,9 @@ class Producto extends Model
             'id_usuario',
             'id_producto',
             'id_usuario'
-        )->using(Favorito::class)->withPivot('created_at');
+        )
+            ->using(Favorito::class)
+            ->withPivot('created_at');
     }
 
 
@@ -114,4 +118,24 @@ class Producto extends Model
             'id_producto'
         );
     }
+
+    /**
+     * Historial de respuestas de pedidos relacionados con este producto.
+     */
+    public function historialRespuestasPedido(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            HistorialRespuestaProducto::class,
+            DetallePedido::class,
+            'id_producto',
+            'id_detalle_pedido',
+            'id_producto',
+            'id_detalle_pedido'
+        );
+    }
+
+
+
+
+
 }

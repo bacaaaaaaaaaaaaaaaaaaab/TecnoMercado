@@ -1,8 +1,10 @@
-
 <?php
 
 use App\Models\Usuario;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Livewire\Livewire;
+
+uses(DatabaseTransactions::class);
 
 test('profile page is displayed', function () {
     $this->actingAs($usuario = Usuario::factory()->create());
@@ -12,13 +14,14 @@ test('profile page is displayed', function () {
 
 test('profile information can be updated', function () {
     $usuario = Usuario::factory()->create();
+    $correo = fake()->unique()->safeEmail();
 
     $this->actingAs($usuario);
 
     $response = Livewire::test('pages::settings.profile')
         ->set('nombre', 'Test')
         ->set('apellidos', 'User')
-        ->set('correo', 'test@example.com')
+        ->set('correo', $correo)
         ->call('updateProfileInformation');
 
     $response->assertHasNoErrors();
@@ -27,7 +30,7 @@ test('profile information can be updated', function () {
 
     expect($usuario->nombre)->toEqual('Test');
     expect($usuario->apellidos)->toEqual('User');
-    expect($usuario->correo)->toEqual('test@example.com');
+    expect($usuario->correo)->toEqual($correo);
 });
 
 test('email address can remain unchanged when updating profile', function () {
